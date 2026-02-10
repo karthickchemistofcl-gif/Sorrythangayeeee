@@ -2,80 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>I'm Really Sorry</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-    margin:0;
-    padding:0;
-    height:100vh;
-    background:#0f0f0f;
-    color:white;
-    font-family: Georgia, serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Georgia', serif;
 }
 
-.container{
-    max-width:700px;
-    padding:20px;
+body {
+  background: #000;
+  color: #fff;
+  overflow: hidden;
 }
 
-#text{
-    font-size:22px;
-    line-height:1.7;
-    white-space:pre-wrap;
+.page {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
 }
 
-button{
-    margin-top:30px;
-    padding:10px 25px;
-    font-size:18px;
-    border:none;
-    border-radius:20px;
-    cursor:pointer;
+.page.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------- PAGE 1 ---------- */
+#page1 {
+  background: url('bg.jpg') center/cover no-repeat;
+  text-align: center;
+  padding: 20px;
+}
+
+.overlay {
+  background: rgba(0,0,0,0.6);
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 90%;
+}
+
+#typewriter {
+  font-size: 18px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+#catImg {
+  display: none;
+  width: 220px;
+  margin-top: 20px;
+  border-radius: 12px;
+}
+
+#sorryBottom {
+  display: none;
+  margin-top: 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.arrow {
+  position: absolute;
+  bottom: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* ---------- PAGE 2 ---------- */
+#page2 {
+  background: linear-gradient(135deg,#1a1a1a,#000);
+}
+
+.choiceBox {
+  display: flex;
+  gap: 30px;
+}
+
+.box {
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ---------- PAGE 3 ---------- */
+#page3 {
+  background: #000;
+}
+
+#monkeyImg {
+  width: 260px;
+  border-radius: 14px;
+}
+
+#cutieText {
+  margin-top: 15px;
+  font-size: 22px;
+  font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <div id="text"></div>
-    <button onclick="next()">➜</button>
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="overlay">
+    <div id="typewriter"></div>
+    <img id="catImg" src="cat.jpg">
+    <div id="sorryBottom">I'm really sorry 🥺</div>
+  </div>
+  <div class="arrow" onclick="nextPage(2)">⬇️</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="page2">
+  <div class="choiceBox">
+    <div class="box" onclick="nextPage(3)">1</div>
+    <div class="box" onclick="nextPage(3)">2</div>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="page3">
+  <img id="monkeyImg" src="monkey.jpg">
+  <div id="cutieText">This is u cutieee 🐒❤️</div>
 </div>
 
 <script>
-const message =
-`I'm really sorryyyyyyyy 🤍
+const text = `im reallly sorryyyyyyyy en thangayeeeeeeee 💔
 
-En thangayeeeeeeee,
-Enna mannichuuurruuuuu 🫂
+Enna mannichuuurruuuuu…
+Enaku en sila vishayam kashtapaduthudhunu therila.
+Ana inime adhunala unna kashtapaduthaama iruppen.
 
-Enaku sila vishayam kashtapaduthudhu nu theriyala...
-Ana inimel adhunala unna kashtapaduthaama iruppen.
-
-Edhume therinju naan pannala.
-Please enna mannichu 🤧`;
+Edhume enaku therinju naan pannala…
+Enna mannichu please 🥺`;
 
 let i = 0;
-let speed = 45;
-let textDiv = document.getElementById("text");
+const speed = 45; // typing speed
 
-function typeWriter(){
-    if(i < message.length){
-        textDiv.innerHTML += message.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-    }
+function typeWriter() {
+  if (i < text.length) {
+    document.getElementById("typewriter").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  } else {
+    setTimeout(() => {
+      document.getElementById("catImg").style.display = "block";
+      document.getElementById("sorryBottom").style.display = "block";
+    }, 800);
+  }
 }
+
 typeWriter();
 
-function next(){
-    textDiv.innerHTML = "This is you cutieeee 🐒🤍";
+function nextPage(num) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + num).classList.add('active');
 }
 </script>
 
